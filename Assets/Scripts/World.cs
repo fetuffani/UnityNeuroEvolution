@@ -9,8 +9,8 @@ public class World : MonoBehaviour
 	public GameObject[] snakes;
 	public GameObject[] apples;
 
-	private int snakesnum = 10;
-	private int applesnum = 10;
+	private int snakesnum = 1;
+	private int applesnum = 1;
 
 
 	void Start()

@@ -33,6 +33,7 @@ public class SnakeBrain : MonoBehaviour
 	int meanarraypos = 0;
 	float[] meanarray;
 
+
 	// Update is called once per frame
 	void Update()
 	{
@@ -41,11 +42,7 @@ public class SnakeBrain : MonoBehaviour
 		brake_factor = (150.4f * Average(meanarray));
 		//Velocity = Vector3.zero;
 
-		float scale;
-		if (Velocity.sqrMagnitude > 1)
-			Velocity.Scale(new Vector3(scale = 1 / Velocity.sqrMagnitude,
-				scale,
-				scale)); ;
+
 
 		GameObject food = GetClosestFood();
 
@@ -55,26 +52,53 @@ public class SnakeBrain : MonoBehaviour
 		float difx = Mathf.Abs(food.transform.position.x - gameObject.transform.position.x);
 		float dify = Mathf.Abs(food.transform.position.y - gameObject.transform.position.y);
 
-		if (difx > 0.01)
-		{
-			if (food.transform.position.x > gameObject.transform.position.x)
-				AccelerateRight();
-			else
-				AccelerateLeft();
-		}
+		Vector3 accel = Vector3.zero;
 
-		if (dify > 0.01)
-		{
-			if (food.transform.position.y > gameObject.transform.position.y)
-				AccelerateDown();
-			else
-				AccelerateUp();
-		}
+
+		accel.x = food.transform.position.x - gameObject.transform.position.x;
+		accel.y = food.transform.position.y - gameObject.transform.position.y;
+
+		
+		System.Action<Vector3, float> LimitMagnitude = (Vector3 vector, float max) =>
+		   {
+			   if (vector.sqrMagnitude > 1)
+			   {
+				   float scale;
+				   vector.Scale(new Vector3(scale = 1 / Velocity.sqrMagnitude,
+				   scale,
+				   scale));
+			   }
+		   };
+		LimitMagnitude(accel,1);
+		KalmanAcceleration(0.01f, accel);
+		LimitMagnitude(Velocity,2);
+
+		//if (difx > 0.01)
+		//{
+		//	if (food.transform.position.x > gameObject.transform.position.x)
+		//		AccelerateRight();
+		//	else
+		//		AccelerateLeft();
+		//}
+
+		//if (dify > 0.01)
+		//{
+		//	if (food.transform.position.y > gameObject.transform.position.y)
+		//		AccelerateDown();
+		//	else
+		//		AccelerateUp();
+		//}
 
 		gameObject.transform.position += (Velocity * Time.deltaTime);
 
 		float angle = Mathf.Atan2(Velocity.y, Velocity.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+	}
+
+	private void KalmanAcceleration(float v, Vector3 accel)
+	{
+		Velocity.x = Velocity.x * (1f - v) + accel.x * v;
+		Velocity.y = Velocity.y * (1f - v) + accel.y * v;
 	}
 
 	//Detect collisions between the GameObjects with Colliders attached
