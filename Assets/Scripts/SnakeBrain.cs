@@ -17,7 +17,6 @@ public class SnakeBrain : MonoBehaviour
 
 	public Vector3 Velocity;
 
-	public float accel_factor = (float)(0.0002f);
 	public float brake_factor = 1.01f; // (float)(252.4 / EvoEngine.FPS);
 
 	void Start()
@@ -38,8 +37,7 @@ public class SnakeBrain : MonoBehaviour
 	void Update()
 	{
 		meanarray[meanarraypos = ++meanarraypos % meanarraylen] = Time.deltaTime;
-		accel_factor = (float)(0.05);
-		brake_factor = (150.4f * Average(meanarray));
+		//brake_factor = (150.4f * Average(meanarray)); /* talvez acabe usando pra balizar o filtro kalman */
 		//Velocity = Vector3.zero;
 
 
@@ -69,9 +67,9 @@ public class SnakeBrain : MonoBehaviour
 				   scale));
 			   }
 		   };
-		LimitMagnitude(accel,1);
-		KalmanAcceleration(0.01f, accel);
-		LimitMagnitude(Velocity,2);
+		LimitMagnitude(accel, 0.1f);
+		KalmanAcceleration(/*0.01f*/ Time.deltaTime, accel);
+		LimitMagnitude(Velocity, 2f);
 
 		//if (difx > 0.01)
 		//{
@@ -104,39 +102,12 @@ public class SnakeBrain : MonoBehaviour
 	//Detect collisions between the GameObjects with Colliders attached
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		col.gameObject.transform.position = new Vector3(
-				Random.Range(-5f, 5f),
-				Random.Range(-5f, 5f),
-		   -1f
-	   );
+		if (col.gameObject.CompareTag("apple"))
+		{
+			World.RandomLocation(col.gameObject);
+		}
 
 	}
-
-
-	public void AccelerateUp()
-	{
-		SetVelocity(new Vector3(Velocity.x / brake_factor, Velocity.y - accel_factor, 0));		
-	}
-
-	public void AccelerateDown()
-	{
-		SetVelocity(new Vector3(Velocity.x / brake_factor, Velocity.y + accel_factor, 0));
-	}
-
-	public void AccelerateLeft()
-	{
-		SetVelocity(new Vector3(Velocity.x - accel_factor, Velocity.y / brake_factor, 0));
-	}
-
-	public void AccelerateRight()
-	{
-		SetVelocity(new Vector3(Velocity.x + accel_factor, Velocity.y / brake_factor, 0));
-	}
-
-	public virtual void SetVelocity(Vector3 velocity)
-	{
-		this.Velocity = velocity;		
-	}	
 
 	public virtual void SetRotate(GameObject target)
     {

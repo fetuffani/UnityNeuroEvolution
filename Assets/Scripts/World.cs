@@ -8,9 +8,10 @@ public class World : MonoBehaviour
 	public GameObject apple;
 	public GameObject[] snakes;
 	public GameObject[] apples;
+	public GameObject Border;
 
-	private int snakesnum = 1;
-	private int applesnum = 1;
+	private int snakesnum = 3;
+	private int applesnum = 3;
 
 
 	void Start()
@@ -20,11 +21,7 @@ public class World : MonoBehaviour
 		{
 			snakes[i] = Instantiate(snake);
 			snakes[i].name = $"snake_{i}";
-			snakes[i].transform.position = new Vector3(
-				Random.Range(-10.30f, 8.30f),
-				Random.Range(-3.0f, 3.0f),
-				0f
-			);
+			RandomLocation(snakes[i]);
 			
 		}
 
@@ -33,13 +30,29 @@ public class World : MonoBehaviour
 		{
 			apples[i] = Instantiate(apple);
 			apples[i].name = $"apple_{i}";
-			apples[i].transform.position = new Vector3(
-				Random.Range(-10.30f, 8.30f),
-				Random.Range(-3f, 3f),
-				0f
-			);
+			RandomLocation(apples[i]);
 
 		}
+	}
+
+	public void RandomLocation(GameObject obj)
+	{
+		var border = GetMaxBounds(Border);
+		obj.transform.position = new Vector3(
+				Random.Range(border.min.x, border.max.x),
+				Random.Range(border.min.y, border.max.y),
+		   -1f
+	   );
+	}
+
+	Bounds GetMaxBounds(GameObject g)
+	{
+		var b = new Bounds(g.transform.position, Vector3.zero);
+		foreach (Renderer r in g.GetComponentsInChildren<Renderer>())
+		{
+			b.Encapsulate(r.bounds);
+		}
+		return b;
 	}
 
 	void Update()
