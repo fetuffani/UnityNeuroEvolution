@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,29 @@ public class World : MonoBehaviour
 	public GameObject[] apples;
 	public GameObject Border;
 
-	private int snakesnum = 3;
-	private int applesnum = 3;
+	private int snakesnum = 10;
+	private int applesnum = 10;
+
+
+	public int[] NeuralNetworkShape = { 10, 4, 4 };
+	public int NeuralNetworkWeightsCount;
+	public GeneticAlgorithm<double> GenePool;
+	public int AdditionalGenes = 0;
 
 
 	void Start()
 	{
+		NeuralNetworkWeightsCount = Extensions.NeuralNetworkWeightCount(NeuralNetworkShape);
+
+		GenePool = new GeneticAlgorithm<double>(
+			snakesnum, //Population size
+			NeuralNetworkWeightsCount + AdditionalGenes, //DNA size, calculated by the network weights plus the additional genes
+			Extensions.Random,
+			getRandomGene,
+			5, //Elitism
+			0.05
+		);
+
 		snakes = new GameObject[snakesnum];
 		for (int i = 0; i < snakes.Length; i++)
 		{
@@ -35,12 +53,16 @@ public class World : MonoBehaviour
 		}
 	}
 
+	private double getRandomGene()
+	{
+		return Extensions.GetRandom(-1, 1);
+	}
 	public void RandomLocation(GameObject obj)
 	{
 		var border = GetMaxBounds(Border);
 		obj.transform.position = new Vector3(
-				Random.Range(border.min.x, border.max.x),
-				Random.Range(border.min.y, border.max.y),
+				UnityEngine.Random.Range(border.min.x, border.max.x),
+				UnityEngine.Random.Range(border.min.y, border.max.y),
 		   -1f
 	   );
 	}
@@ -57,11 +79,13 @@ public class World : MonoBehaviour
 
 	void Update()
 	{
-		GameObject sceneCamObj = GameObject.Find("SceneCamera");
-		if (sceneCamObj != null)
+		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			// Should output the real dimensions of scene viewport
-			//Debug.Log(sceneCamObj.GetComponent<Camera>().rect);
+			GenePool.NewGeneration(2);
+			for (int i = 0; i < snakes.Length; i++)
+			{
+				snakes[i].GetComponent<SnakeBrain>().AssignDNA(i);
+			}
 		}
 	}
 }

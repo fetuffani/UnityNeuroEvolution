@@ -53,8 +53,19 @@
     <UnityVersion>2020.3.17f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Extensions.cs" />
+    <Compile Include="Assets\Scripts\DNA.cs" />
     <Compile Include="Assets\Scripts\World.cs" />
+    <Compile Include="Assets\Scripts\GeneticAlgorithm.cs" />
     <Compile Include="Assets\Scripts\SnakeBrain.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Scripts\Accord.NET\Accord.Neuro.dll" />
+    <None Include="Assets\Scripts\Accord.NET\Accord.Genetic.dll" />
+    <None Include="Assets\Scripts\Accord.NET\Accord.Math.dll" />
+    <None Include="Assets\Scripts\Accord.NET\Accord.Math.Core.dll" />
+    <None Include="Assets\Scripts\Accord.NET\Accord.Statistics.dll" />
+    <None Include="Assets\Scripts\Accord.NET\Accord.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -278,6 +289,24 @@
     </Reference>
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>D:\Unity\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Genetic">
+      <HintPath>Assets\Scripts\Accord.NET\Accord.Genetic.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Statistics">
+      <HintPath>Assets\Scripts\Accord.NET\Accord.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord">
+      <HintPath>Assets\Scripts\Accord.NET\Accord.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Neuro">
+      <HintPath>Assets\Scripts\Accord.NET\Accord.Neuro.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math">
+      <HintPath>Assets\Scripts\Accord.NET\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math.Core">
+      <HintPath>Assets\Scripts\Accord.NET\Accord.Math.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
