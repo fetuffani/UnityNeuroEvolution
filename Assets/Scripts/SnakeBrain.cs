@@ -65,6 +65,8 @@ public class SnakeBrain : MonoBehaviour
 	{
 		if (Energy <= 0)
 		{
+			var body = FindObjectOfType<Rigidbody2D>();
+			body.simulated = false;
 			return;
 		}
 
@@ -285,6 +287,8 @@ public class SnakeBrain : MonoBehaviour
 
 	internal void AssignDNA(int i)
 	{
+		var body = FindObjectOfType<Rigidbody2D>();
+		body.simulated = true;
 		CurrentDNA = i;
 		var dna = GetCurrentGene();
 		SetNetworkWeights(dna);

@@ -47,12 +47,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   World: {fileID: 0}
-  speed: 1
   rotatespeed: 720
   size: 1
+  sensorSensibility: 0.25
   Velocity: {x: 0, y: 0, z: 0}
-  accel_factor: 1
   brake_factor: 1.01
+  CurrentDNA: 0
+  FoodSensorsCount: 0
+  Energy: 10
 --- !u!50 &-2867429456346396969
 Rigidbody2D:
   serializedVersion: 4
