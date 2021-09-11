@@ -17,7 +17,6 @@ ScriptsOnlyBuild:
     - UnityEditor.Tilemaps.GridPaintPaletteWindow
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
-    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.PaintableSceneViewGrid
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
@@ -52,11 +51,11 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 622}
+      Script: {instanceID: 634}
     - Class: 114
-      Script: {instanceID: 3858}
+      Script: {instanceID: 3882}
     - Class: 114
-      Script: {instanceID: 5008}
+      Script: {instanceID: 5036}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -378,7 +377,7 @@ ScriptsOnlyBuild:
     className: BaseInput
   - hash:
       serializedVersion: 2
-      Hash: e8397703a89edf26ea9517e6cb298836
+      Hash: 3515a199da475a4715dd014430d9f183
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: World
@@ -552,7 +551,7 @@ ScriptsOnlyBuild:
     className: TMP_SubMeshUI
   - hash:
       serializedVersion: 2
-      Hash: 6f174b3e251515df07f668d1b423fc5f
+      Hash: d22812e477947c99d9fbcf51b53dfc50
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SnakeBrain
